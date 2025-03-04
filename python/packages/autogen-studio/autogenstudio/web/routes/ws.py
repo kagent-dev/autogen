@@ -89,8 +89,9 @@ async def run_websocket(
                     {"type": "error", "error": "Invalid message format", "timestamp": datetime.utcnow().isoformat()}
                 )
 
-    except WebSocketDisconnect:
+    except WebSocketDisconnect as e:
         logger.info(f"WebSocket disconnected for run {run_id}")
+        logger.info(f"WebSocket disconnect reason: {e.code} {e.reason}")
     except Exception as e:
         logger.error(f"WebSocket error: {str(e)}")
     finally:
