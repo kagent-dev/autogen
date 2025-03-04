@@ -82,6 +82,8 @@ async def run_websocket(
                         await ws_manager.handle_input_response(run_id, response)
                     else:
                         logger.warning(f"Invalid input response format for run {run_id}")
+                else:
+                    logger.warning(f"Invalid message type: {message.get('type')}")
 
             except json.JSONDecodeError:
                 logger.warning(f"Invalid JSON received: {raw_message}")
