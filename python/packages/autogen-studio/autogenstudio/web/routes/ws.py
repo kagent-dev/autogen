@@ -22,11 +22,14 @@ async def run_websocket(
 ):
     """WebSocket endpoint for run communication"""
     # Verify run exists and is in valid state
+    logger.info(f"Connecting to run {run_id}")
     run_response = db.get(Run, filters={"id": run_id}, return_json=False)
     if not run_response.status or not run_response.data:
         logger.warning(f"Run not found: {run_id}")
         await websocket.close(code=4004, reason="Run not found")
         return
+
+    logger.info(f"Connection for run {run_id}: {run_response}")
 
     run = run_response.data[0]
     if run.status not in [RunStatus.CREATED, RunStatus.ACTIVE]:

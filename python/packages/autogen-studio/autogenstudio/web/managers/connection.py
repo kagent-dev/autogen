@@ -376,7 +376,9 @@ class WebSocketManager:
         Returns:
             Optional[Run]: Run object if found, None otherwise
         """
+        logger.info(f"Getting run {run_id}")
         response = self.db_manager.get(Run, filters={"id": run_id}, return_json=False)
+        logger.info(f"Run {run_id}: {response}")
         return response.data[0] if response.status and response.data else None
 
     async def _get_settings(self, user_id: str) -> Optional[Settings]:
