@@ -33,8 +33,7 @@ from ...datamodel import (
     TeamResult,
 )
 from ...teammanager import TeamManager
-
-logger = logging.getLogger(__name__)
+from loguru import logger
 
 
 class WebSocketManager:
