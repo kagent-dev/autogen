@@ -42,8 +42,6 @@ def _format_task_result(task_result: TaskResult) -> dict:
     """
     Format the result from TeamResult to a dictionary.
     """
-    for message in task_result.messages:
-        print(f"Message: {message}, Type: {type(message)}")
     formatted_result = {
         "messages": [
             _format_message(message) for message in task_result.messages
