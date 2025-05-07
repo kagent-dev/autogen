@@ -806,15 +806,21 @@ class BaseOllamaChatCompletionClient(ChatCompletionClient):
                 completion_tokens = chunk.eval_count
             else:
                 completion_tokens = 0
-        elif len(content_chunks) > 1:
+        elif len(content_chunks) > 0:
             content = "".join(content_chunks)
             if chunk and chunk.eval_count:
                 completion_tokens = chunk.eval_count
             else:
                 completion_tokens = 0
-        else:
-            completion_tokens = 0
+        elif len(full_tool_calls) > 0:
             content = full_tool_calls
+            completion_tokens = chunk.eval_count if chunk and chunk.eval_count else 0
+        elif normalize_stop_reason(stop_reason) == "stop":
+            content = ""
+            completion_tokens = 0
+        else:
+            content = []
+            completion_tokens = 0
 
         usage = RequestUsage(
             prompt_tokens=prompt_tokens,
